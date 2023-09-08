@@ -699,6 +699,7 @@ public class MainFrame extends javax.swing.JFrame {
                 String estilo = cb_estiloNadador1.getSelectedItem().toString();
                 nacionalidad.getNadadores().remove(nadadores.get(cb_nadador.getSelectedIndex()));
                 nacionalidad.getNadadores().add(new Nadador(nombre, nacionalidad, edad, estatura, estilo, distancia, tiempo, numMNadador));
+                nadadores.remove(cb_nadador.getSelectedItem());
                 nadadores.add(new Nadador(nombre, nacionalidad, edad, estatura, estilo, distancia, tiempo, numMNadador));
                 JOptionPane.showMessageDialog(this, "Modificado exitosamente");
                 tf_nombreNadador1.setText("");
@@ -727,6 +728,7 @@ public class MainFrame extends javax.swing.JFrame {
         if (cb_evento.getSelectedIndex() >= 0) {
             eventos.remove(cb_evento.getSelectedIndex());
             JOptionPane.showMessageDialog(this, "Eliminado exitosamente");
+            cb_evento.setModel(actualizarcbevento());
         }
     }//GEN-LAST:event_btn_eliminarEventoMouseClicked
 
@@ -749,6 +751,7 @@ public class MainFrame extends javax.swing.JFrame {
         if (tf_recordEvento1.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Los parametros no deben estar vacios");
         }else{
+            eventos.remove(cb_evento.getSelectedItem());
             eventos.add(new Evento(cb_estilosEvento1.getSelectedItem().toString(), 
                     Integer.parseInt(cb_distanciaEvento1.getSelectedItem().toString().replace("m", "")),
                     Double.parseDouble(tf_recordEvento1.getText())));
