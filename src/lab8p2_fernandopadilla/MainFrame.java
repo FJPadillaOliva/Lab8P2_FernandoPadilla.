@@ -4,10 +4,17 @@
  */
 package lab8p2_fernandopadilla;
 
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListDataListener;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -42,7 +49,7 @@ public class MainFrame extends javax.swing.JFrame {
         }
         return modelo;
     }
-    
+
     public DefaultComboBoxModel actualizarcbevento() {
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
         for (Evento t : eventos) {
@@ -51,6 +58,140 @@ public class MainFrame extends javax.swing.JFrame {
         return modelo;
     }
 
+    public void escribirAPais(){
+        File archivo = new File("./PaisesParticipantes.lab");
+        FileOutputStream fw = null;
+        ObjectOutputStream bw = null;
+        try {
+            fw = new FileOutputStream(archivo);
+            bw = new ObjectOutputStream(fw);
+            for (Nadador t : nadadores) {
+                bw.writeObject(t);
+            }
+            bw.flush();
+        } catch (Exception ex) {
+        } finally {
+            try {
+                bw.close();
+                fw.close();
+            } catch (Exception ex) {
+            }
+        }
+    }
+    
+    public void escribirANadador(){
+        File archivo = new File("./Nadadores.lab");
+        FileOutputStream fw = null;
+        ObjectOutputStream bw = null;
+        try {
+            fw = new FileOutputStream(archivo);
+            bw = new ObjectOutputStream(fw);
+            for (Nadador t : nadadores) {
+                bw.writeObject(t);
+            }
+            bw.flush();
+        } catch (Exception ex) {
+        } finally {
+            try {
+                bw.close();
+                fw.close();
+            } catch (Exception ex) {
+            }
+        }
+    }
+    
+    public void escribirAEvento(){
+        File archivo = new File("./Eventos.lab");
+        FileOutputStream fw = null;
+        ObjectOutputStream bw = null;
+        try {
+            fw = new FileOutputStream(archivo);
+            bw = new ObjectOutputStream(fw);
+            for (Nadador t : nadadores) {
+                bw.writeObject(t);
+            }
+            bw.flush();
+        } catch (Exception ex) {
+        } finally {
+            try {
+                bw.close();
+                fw.close();
+            } catch (Exception ex) {
+            }
+        }
+    }
+    
+    public void leerAPais(){
+        try {            
+            File archivo = new File("./PaisesParticipantes.lab");
+            Pais temp;
+            if (archivo.exists()) {
+                FileInputStream entrada
+                    = new FileInputStream(archivo);
+                ObjectInputStream objeto
+                    = new ObjectInputStream(entrada);
+                try {
+                    while ((temp = (Pais) objeto.readObject()) != null) {
+                        paises.add(temp);
+                    }
+                } catch (EOFException e) {
+                    //encontro el final del archivo
+                }
+                objeto.close();
+                entrada.close();
+            }            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void leerANadador(){
+        try {            
+            File archivo = new File("./Nadadores.lab");
+            Nadador temp;
+            if (archivo.exists()) {
+                FileInputStream entrada
+                    = new FileInputStream(archivo);
+                ObjectInputStream objeto
+                    = new ObjectInputStream(entrada);
+                try {
+                    while ((temp = (Nadador) objeto.readObject()) != null) {
+                        nadadores.add(temp);
+                    }
+                } catch (EOFException e) {
+                    //encontro el final del archivo
+                }
+                objeto.close();
+                entrada.close();
+            }            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void leerAEvento(){
+        try {            
+            File archivo = new File("./Eventos.lab");
+            Evento temp;
+            if (archivo.exists()) {
+                FileInputStream entrada
+                    = new FileInputStream(archivo);
+                ObjectInputStream objeto
+                    = new ObjectInputStream(entrada);
+                try {
+                    while ((temp = (Evento) objeto.readObject()) != null) {
+                        eventos.add(temp);
+                    }
+                } catch (EOFException e) {
+                    //encontro el final del archivo
+                }
+                objeto.close();
+                entrada.close();
+            }            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -125,6 +266,10 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         btn_eliminarNadador = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        cb_paises = new javax.swing.JComboBox<>();
+        btn_actualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -581,15 +726,61 @@ public class MainFrame extends javax.swing.JFrame {
 
         jPanel8.setBackground(new java.awt.Color(0, 102, 102));
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nombre", "Nacionalidad", "Edad", "Estatura", "Estilo", "Distancia", "Tiempo", "Medallas"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        btn_actualizar.setText("Actualizar");
+        btn_actualizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_actualizarMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 620, Short.MAX_VALUE)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 489, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cb_paises, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                        .addComponent(btn_actualizar)
+                        .addGap(23, 23, 23))))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 439, Short.MAX_VALUE)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(cb_paises, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_actualizar)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Listar Nadadores", jPanel8);
@@ -640,6 +831,8 @@ public class MainFrame extends javax.swing.JFrame {
                 paises.add(new Pais(tf_nombrePais.getText(), Integer.parseInt(tf_numMPais.getText())));
                 JOptionPane.showMessageDialog(this, "Agregado exitosamente");
                 cb_nacionalidad.setModel(actualizarcbpais());
+                cb_paises.setModel(actualizarcbpais());
+                escribirAPais();
             }
             tf_nombrePais.setText("");
             tf_numMPais.setText("");
@@ -667,6 +860,8 @@ public class MainFrame extends javax.swing.JFrame {
                 nacionalidad.getNadadores().add(new Nadador(nombre, nacionalidad, edad, estatura, estilo, distancia, tiempo, numMNadador));
                 nadadores.add(new Nadador(nombre, nacionalidad, edad, estatura, estilo, distancia, tiempo, numMNadador));
                 JOptionPane.showMessageDialog(this, "Agregado exitosamente");
+                cb_nadador.setModel(actualizarcbnadador());
+                escribirANadador();
             } else {
                 JOptionPane.showMessageDialog(this, "El pais seleccionado ya cuenta con dos nadadores");
             }
@@ -675,7 +870,6 @@ public class MainFrame extends javax.swing.JFrame {
             tf_estatura.setText("");
             tf_numMNadador.setText("");
             tf_tiempoNadador.setText("");
-            cb_nadador.setModel(actualizarcbnadador());
         }
     }//GEN-LAST:event_btn_agregarNadadorMouseClicked
 
@@ -708,8 +902,9 @@ public class MainFrame extends javax.swing.JFrame {
                 tf_numMNadador1.setText("");
                 tf_tiempoNadador1.setText("");
                 cb_nadador.setModel(actualizarcbnadador());
+                escribirANadador();
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un nadador a modificar");
         }
     }//GEN-LAST:event_btn_modificarNadadorMouseClicked
@@ -720,6 +915,7 @@ public class MainFrame extends javax.swing.JFrame {
             nadadores.remove(cb_nadador.getSelectedIndex());
             JOptionPane.showMessageDialog(this, "Eliminado exitosamente");
             cb_nadador.setModel(actualizarcbnadador());
+            escribirANadador();
         }
     }//GEN-LAST:event_btn_eliminarNadadorMouseClicked
 
@@ -729,6 +925,7 @@ public class MainFrame extends javax.swing.JFrame {
             eventos.remove(cb_evento.getSelectedIndex());
             JOptionPane.showMessageDialog(this, "Eliminado exitosamente");
             cb_evento.setModel(actualizarcbevento());
+            escribirAEvento();
         }
     }//GEN-LAST:event_btn_eliminarEventoMouseClicked
 
@@ -736,12 +933,13 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (tf_recordEvento.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Los parametros no deben estar vacios");
-        }else{
-            eventos.add(new Evento(cb_estilosEvento.getSelectedItem().toString(), 
+        } else {
+            eventos.add(new Evento(cb_estilosEvento.getSelectedItem().toString(),
                     Integer.parseInt(cb_distanciaEvento.getSelectedItem().toString().replace("m", "")),
                     Double.parseDouble(tf_recordEvento.getText())));
             JOptionPane.showMessageDialog(this, "Agregado exitosamente");
             cb_evento.setModel(actualizarcbevento());
+            escribirAEvento();
         }
         tf_recordEvento.setText("");
     }//GEN-LAST:event_btn_agregarEventoMouseClicked
@@ -750,16 +948,44 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (tf_recordEvento1.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Los parametros no deben estar vacios");
-        }else{
+        } else {
             eventos.remove(cb_evento.getSelectedItem());
-            eventos.add(new Evento(cb_estilosEvento1.getSelectedItem().toString(), 
+            eventos.add(new Evento(cb_estilosEvento1.getSelectedItem().toString(),
                     Integer.parseInt(cb_distanciaEvento1.getSelectedItem().toString().replace("m", "")),
                     Double.parseDouble(tf_recordEvento1.getText())));
             JOptionPane.showMessageDialog(this, "Agregado exitosamente");
             cb_evento.setModel(actualizarcbevento());
+            escribirAEvento();
         }
         tf_recordEvento1.setText("");
     }//GEN-LAST:event_btn_modificarEventoMouseClicked
+
+    private void btn_actualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_actualizarMouseClicked
+        // TODO add your handling code here:
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                new String[]{
+                    "Nombre", "Nacionalidad", "Edad", "Estatura", "Estilo", "Distancia", "Tiempo", "Medallas"
+                }
+        ) {
+            boolean[] canEdit = new boolean[]{
+                false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        });
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        if (cb_paises.getSelectedIndex() >= 0) {
+            for (Nadador t : paises.get(cb_paises.getSelectedIndex()).getNadadores()) {
+                Object[] row = {t.getNombre(),t.getNacionalidad(),t.getEdad(),t.getEstatura(),t.getEstilo(),t.getDistancia(),t.getTiempoR(),t.getNumMedallas() 
+            };
+                modelo.addRow(row);
+            }
+        }
+
+    }//GEN-LAST:event_btn_actualizarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -797,6 +1023,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_actualizar;
     private javax.swing.JButton btn_agregarEvento;
     private javax.swing.JButton btn_agregarNadador;
     private javax.swing.JButton btn_crearPais;
@@ -815,6 +1042,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cb_evento;
     private javax.swing.JComboBox<String> cb_nacionalidad;
     private javax.swing.JComboBox<String> cb_nadador;
+    private javax.swing.JComboBox<String> cb_paises;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -847,7 +1075,9 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTextField tf_edad;
     private javax.swing.JTextField tf_edad1;
     private javax.swing.JTextField tf_estatura;
