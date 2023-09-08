@@ -4,6 +4,7 @@ package lab8p2_fernandopadilla;
 
 public class Nadador {
     private String nombre;
+    private Pais nacion;
     private String nacionalidad;
     private int edad;
     private double estatura;
@@ -15,9 +16,10 @@ public class Nadador {
     public Nadador() {
     }
 
-    public Nadador(String nombre, String nacionalidad, int edad, double estatura, String estilo, int distancia, double tiempoR, int numMedallas) {
+    public Nadador(String nombre, Pais nacion,int edad, double estatura, String estilo, int distancia, double tiempoR, int numMedallas) {
         this.nombre = nombre;
-        this.nacionalidad = nacionalidad;
+        this.nacion = nacion;
+        this.nacionalidad = nacion.getNombre();
         this.edad = edad;
         this.estatura = estatura;
         this.estilo = estilo;
@@ -25,6 +27,8 @@ public class Nadador {
         this.tiempoR = tiempoR;
         this.numMedallas = numMedallas;
     }
+
+    
 
     public String getNombre() {
         return nombre;
@@ -89,6 +93,15 @@ public class Nadador {
     public void setNumMedallas(int numMedallas) {
         this.numMedallas = numMedallas;
     }
+
+    public Pais getNacion() {
+        return nacion;
+    }
+
+    public void setNacion(Pais nacion) {
+        this.nacion = nacion;
+    }
+    
 
     @Override
     public String toString() {
