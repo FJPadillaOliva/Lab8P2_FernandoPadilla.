@@ -27,6 +27,13 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
+        leerAEvento();
+        leerANadador();
+        leerAPais();
+        cb_evento.setModel(actualizarcbevento());
+        cb_nacionalidad.setModel(actualizarcbpais());
+        cb_nadador.setModel(actualizarcbnadador());
+        cb_paises.setModel(actualizarcbpais());
     }
 
     ArrayList<Pais> paises = new ArrayList();
