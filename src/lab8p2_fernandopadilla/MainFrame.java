@@ -25,6 +25,7 @@ public class MainFrame extends javax.swing.JFrame {
     ArrayList<Pais> paises = new ArrayList();
     ArrayList<Nadador> nadadores = new ArrayList();
     ArrayList<Evento> eventos = new ArrayList();
+    ArrayList<Nadador> ganadores = new ArrayList();
 
     public DefaultComboBoxModel actualizarcbpais() {
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
@@ -37,6 +38,14 @@ public class MainFrame extends javax.swing.JFrame {
     public DefaultComboBoxModel actualizarcbnadador() {
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
         for (Nadador t : nadadores) {
+            modelo.addElement(t);
+        }
+        return modelo;
+    }
+    
+    public DefaultComboBoxModel actualizarcbevento() {
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+        for (Evento t : eventos) {
             modelo.addElement(t);
         }
         return modelo;
@@ -81,13 +90,41 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         cb_estilosEvento = new javax.swing.JComboBox<>();
-        jComboBox4 = new javax.swing.JComboBox<>();
+        cb_distanciaEvento = new javax.swing.JComboBox<>();
         jLabel13 = new javax.swing.JLabel();
         tf_recordEvento = new javax.swing.JTextField();
         btn_agregarEvento = new javax.swing.JButton();
-        jPanel5 = new javax.swing.JPanel();
-        jPanel6 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
+        jLabel22 = new javax.swing.JLabel();
+        cb_estilosEvento1 = new javax.swing.JComboBox<>();
+        jLabel23 = new javax.swing.JLabel();
+        cb_distanciaEvento1 = new javax.swing.JComboBox<>();
+        jLabel24 = new javax.swing.JLabel();
+        tf_recordEvento1 = new javax.swing.JTextField();
+        btn_modificarEvento = new javax.swing.JButton();
+        btn_eliminarEvento = new javax.swing.JButton();
+        jLabel25 = new javax.swing.JLabel();
+        cb_evento = new javax.swing.JComboBox<>();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        tf_nombreNadador1 = new javax.swing.JTextField();
+        tf_estatura1 = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        tf_edad1 = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        tf_tiempoNadador1 = new javax.swing.JTextField();
+        jLabel18 = new javax.swing.JLabel();
+        tf_numMNadador1 = new javax.swing.JTextField();
+        jLabel19 = new javax.swing.JLabel();
+        cb_distanciaNadador1 = new javax.swing.JComboBox<>();
+        jLabel20 = new javax.swing.JLabel();
+        cb_estiloNadador1 = new javax.swing.JComboBox<>();
+        btn_modificarNadador = new javax.swing.JButton();
+        cb_nadador = new javax.swing.JComboBox<>();
+        jLabel21 = new javax.swing.JLabel();
+        btn_eliminarNadador = new javax.swing.JButton();
+        jPanel8 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -273,11 +310,16 @@ public class MainFrame extends javax.swing.JFrame {
 
         cb_estilosEvento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Libre", "Pecho", "Dorso", "Mariposa" }));
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "100m", "200m", "400m", "800m" }));
+        cb_distanciaEvento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "100m", "200m", "400m", "800m" }));
 
         jLabel13.setText("Record Actual");
 
         btn_agregarEvento.setText("Crear");
+        btn_agregarEvento.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_agregarEventoMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -292,7 +334,7 @@ public class MainFrame extends javax.swing.JFrame {
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cb_estilosEvento, 0, 170, Short.MAX_VALUE)
                             .addComponent(jLabel12)
-                            .addComponent(jComboBox4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cb_distanciaEvento, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel13)
                             .addComponent(tf_recordEvento))
                         .addGap(0, 438, Short.MAX_VALUE)))
@@ -308,7 +350,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cb_distanciaEvento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -320,50 +362,237 @@ public class MainFrame extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Agregar Evento", jPanel4);
 
-        jPanel5.setBackground(new java.awt.Color(0, 102, 102));
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 620, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 439, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("Modificar/Elimin Pais", jPanel5);
-
-        jPanel6.setBackground(new java.awt.Color(0, 102, 102));
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 620, Short.MAX_VALUE)
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 439, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("Modificar/Elim Nadador", jPanel6);
-
         jPanel7.setBackground(new java.awt.Color(0, 102, 102));
+
+        jLabel22.setText("Estilo");
+
+        cb_estilosEvento1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Libre", "Pecho", "Dorso", "Mariposa" }));
+
+        jLabel23.setText("Distancia");
+
+        cb_distanciaEvento1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "100m", "200m", "400m", "800m" }));
+
+        jLabel24.setText("Record Actual");
+
+        btn_modificarEvento.setText("Modificar");
+        btn_modificarEvento.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_modificarEventoMouseClicked(evt);
+            }
+        });
+
+        btn_eliminarEvento.setText("Eliminar");
+        btn_eliminarEvento.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_eliminarEventoMouseClicked(evt);
+            }
+        });
+
+        jLabel25.setText("Evento");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 620, Short.MAX_VALUE)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(btn_modificarEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                        .addComponent(btn_eliminarEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cb_estilosEvento1, 0, 170, Short.MAX_VALUE)
+                            .addComponent(jLabel23)
+                            .addComponent(cb_distanciaEvento1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel24)
+                            .addComponent(tf_recordEvento1))
+                        .addGap(178, 178, 178)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cb_evento, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel22)
+                    .addComponent(jLabel25))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cb_estilosEvento1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cb_evento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel23)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cb_distanciaEvento1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel24)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tf_recordEvento1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(71, 71, 71)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_modificarEvento, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+                    .addComponent(btn_eliminarEvento, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Modificar/Elim Evento", jPanel7);
+
+        jPanel6.setBackground(new java.awt.Color(0, 102, 102));
+
+        jLabel14.setText("Nombre");
+
+        jLabel15.setText("Estatura");
+
+        jLabel16.setText("Edad");
+
+        jLabel17.setText("Tiempo mas Rapido");
+
+        jLabel18.setText("Numero de Medallas");
+
+        jLabel19.setText("Distancia");
+
+        cb_distanciaNadador1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "100m", "200m", "400m", "800m" }));
+
+        jLabel20.setText("Estilo");
+
+        cb_estiloNadador1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Libre", "Pecho", "Dorso", "Mariposa" }));
+
+        btn_modificarNadador.setText("Modificar");
+        btn_modificarNadador.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_modificarNadadorMouseClicked(evt);
+            }
+        });
+
+        jLabel21.setText("Nadador");
+
+        btn_eliminarNadador.setText("Eliminar");
+        btn_eliminarNadador.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_eliminarNadadorMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel15)
+                                    .addComponent(tf_estatura1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 212, Short.MAX_VALUE)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cb_distanciaNadador1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel19)))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel17)
+                                    .addComponent(tf_tiempoNadador1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel18)
+                                    .addComponent(tf_numMNadador1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel16)
+                                    .addComponent(tf_edad1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cb_estiloNadador1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel20))))
+                        .addContainerGap())
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(tf_nombreNadador1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cb_nadador, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel21)
+                        .addGap(185, 185, 185))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
+                        .addComponent(btn_modificarNadador, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_eliminarNadador, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel21))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tf_nombreNadador1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cb_nadador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel15)
+                            .addComponent(jLabel19))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tf_estatura1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(cb_distanciaNadador1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel16)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tf_edad1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel20)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cb_estiloNadador1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel17)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tf_tiempoNadador1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tf_numMNadador1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_modificarNadador, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                    .addComponent(btn_eliminarNadador, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Modificar/Elim Nadador", jPanel6);
+
+        jPanel8.setBackground(new java.awt.Color(0, 102, 102));
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 620, Short.MAX_VALUE)
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 439, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("Modificar/Elim Nadador", jPanel7);
+        jTabbedPane1.addTab("Listar Nadadores", jPanel8);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -446,8 +675,88 @@ public class MainFrame extends javax.swing.JFrame {
             tf_estatura.setText("");
             tf_numMNadador.setText("");
             tf_tiempoNadador.setText("");
+            cb_nadador.setModel(actualizarcbnadador());
         }
     }//GEN-LAST:event_btn_agregarNadadorMouseClicked
+
+    private void btn_modificarNadadorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_modificarNadadorMouseClicked
+        // TODO add your handling code here:
+        if (cb_nadador.getSelectedIndex() >= 0) {
+            if (tf_nombreNadador1.getText().isEmpty()
+                    || tf_edad1.getText().isEmpty()
+                    || tf_estatura1.getText().isEmpty()
+                    || tf_numMNadador1.getText().isEmpty()
+                    || tf_tiempoNadador1.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Los parametros no deben estar vacios");
+            } else {
+                Pais nacionalidad = nadadores.get(cb_nadador.getSelectedIndex()).getNacion();
+                String nombre = tf_nombreNadador1.getText();
+                int edad = Integer.parseInt(tf_edad1.getText());
+                double estatura = Double.parseDouble(tf_estatura1.getText());
+                int numMNadador = Integer.parseInt(tf_numMNadador1.getText());
+                double tiempo = Double.parseDouble(tf_tiempoNadador1.getText());
+                int distancia = Integer.parseInt(cb_distanciaNadador1.getSelectedItem().toString().replace("m", ""));
+                String estilo = cb_estiloNadador1.getSelectedItem().toString();
+                nacionalidad.getNadadores().remove(nadadores.get(cb_nadador.getSelectedIndex()));
+                nacionalidad.getNadadores().add(new Nadador(nombre, nacionalidad, edad, estatura, estilo, distancia, tiempo, numMNadador));
+                nadadores.add(new Nadador(nombre, nacionalidad, edad, estatura, estilo, distancia, tiempo, numMNadador));
+                JOptionPane.showMessageDialog(this, "Modificado exitosamente");
+                tf_nombreNadador1.setText("");
+                tf_edad1.setText("");
+                tf_estatura1.setText("");
+                tf_numMNadador1.setText("");
+                tf_tiempoNadador1.setText("");
+                cb_nadador.setModel(actualizarcbnadador());
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un nadador a modificar");
+        }
+    }//GEN-LAST:event_btn_modificarNadadorMouseClicked
+
+    private void btn_eliminarNadadorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_eliminarNadadorMouseClicked
+        // TODO add your handling code here:
+        if (cb_nadador.getSelectedIndex() >= 0) {
+            nadadores.remove(cb_nadador.getSelectedIndex());
+            JOptionPane.showMessageDialog(this, "Eliminado exitosamente");
+            cb_nadador.setModel(actualizarcbnadador());
+        }
+    }//GEN-LAST:event_btn_eliminarNadadorMouseClicked
+
+    private void btn_eliminarEventoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_eliminarEventoMouseClicked
+        // TODO add your handling code here:
+        if (cb_evento.getSelectedIndex() >= 0) {
+            eventos.remove(cb_evento.getSelectedIndex());
+            JOptionPane.showMessageDialog(this, "Eliminado exitosamente");
+        }
+    }//GEN-LAST:event_btn_eliminarEventoMouseClicked
+
+    private void btn_agregarEventoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_agregarEventoMouseClicked
+        // TODO add your handling code here:
+        if (tf_recordEvento.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Los parametros no deben estar vacios");
+        }else{
+            eventos.add(new Evento(cb_estilosEvento.getSelectedItem().toString(), 
+                    Integer.parseInt(cb_distanciaEvento.getSelectedItem().toString().replace("m", "")),
+                    Double.parseDouble(tf_recordEvento.getText())));
+            JOptionPane.showMessageDialog(this, "Agregado exitosamente");
+            cb_evento.setModel(actualizarcbevento());
+        }
+        tf_recordEvento.setText("");
+    }//GEN-LAST:event_btn_agregarEventoMouseClicked
+
+    private void btn_modificarEventoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_modificarEventoMouseClicked
+        // TODO add your handling code here:
+        if (tf_recordEvento1.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Los parametros no deben estar vacios");
+        }else{
+            eventos.add(new Evento(cb_estilosEvento1.getSelectedItem().toString(), 
+                    Integer.parseInt(cb_distanciaEvento1.getSelectedItem().toString().replace("m", "")),
+                    Double.parseDouble(tf_recordEvento1.getText())));
+            JOptionPane.showMessageDialog(this, "Agregado exitosamente");
+            cb_evento.setModel(actualizarcbevento());
+        }
+        tf_recordEvento1.setText("");
+    }//GEN-LAST:event_btn_modificarEventoMouseClicked
 
     /**
      * @param args the command line arguments
@@ -488,17 +797,39 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton btn_agregarEvento;
     private javax.swing.JButton btn_agregarNadador;
     private javax.swing.JButton btn_crearPais;
+    private javax.swing.JButton btn_eliminarEvento;
+    private javax.swing.JButton btn_eliminarNadador;
+    private javax.swing.JButton btn_modificarEvento;
+    private javax.swing.JButton btn_modificarNadador;
+    private javax.swing.JComboBox<String> cb_distanciaEvento;
+    private javax.swing.JComboBox<String> cb_distanciaEvento1;
     private javax.swing.JComboBox<String> cb_distanciaNadador;
+    private javax.swing.JComboBox<String> cb_distanciaNadador1;
     private javax.swing.JComboBox<String> cb_estiloNadador;
+    private javax.swing.JComboBox<String> cb_estiloNadador1;
     private javax.swing.JComboBox<String> cb_estilosEvento;
+    private javax.swing.JComboBox<String> cb_estilosEvento1;
+    private javax.swing.JComboBox<String> cb_evento;
     private javax.swing.JComboBox<String> cb_nacionalidad;
-    private javax.swing.JComboBox<String> jComboBox4;
+    private javax.swing.JComboBox<String> cb_nadador;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -510,17 +841,23 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField tf_edad;
+    private javax.swing.JTextField tf_edad1;
     private javax.swing.JTextField tf_estatura;
+    private javax.swing.JTextField tf_estatura1;
     private javax.swing.JTextField tf_nombreNadador;
+    private javax.swing.JTextField tf_nombreNadador1;
     private javax.swing.JTextField tf_nombrePais;
     private javax.swing.JTextField tf_numMNadador;
+    private javax.swing.JTextField tf_numMNadador1;
     private javax.swing.JTextField tf_numMPais;
     private javax.swing.JTextField tf_recordEvento;
+    private javax.swing.JTextField tf_recordEvento1;
     private javax.swing.JTextField tf_tiempoNadador;
+    private javax.swing.JTextField tf_tiempoNadador1;
     // End of variables declaration//GEN-END:variables
 }
