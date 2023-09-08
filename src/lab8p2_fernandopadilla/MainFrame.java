@@ -4,6 +4,11 @@
  */
 package lab8p2_fernandopadilla;
 
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.event.ListDataListener;
+
 /**
  *
  * @author Wendy
@@ -15,6 +20,26 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
+    }
+
+    ArrayList<Pais> paises = new ArrayList();
+    ArrayList<Nadador> nadadores = new ArrayList();
+    ArrayList<Evento> eventos = new ArrayList();
+
+    public DefaultComboBoxModel actualizarcbpais() {
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+        for (Pais t : paises) {
+            modelo.addElement(t);
+        }
+        return modelo;
+    }
+
+    public DefaultComboBoxModel actualizarcbnadador() {
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+        for (Nadador t : nadadores) {
+            modelo.addElement(t);
+        }
+        return modelo;
     }
 
     /**
@@ -75,6 +100,11 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel2.setText("Num Medallas");
 
         btn_crearPais.setText("Crear");
+        btn_crearPais.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_crearPaisMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -358,6 +388,27 @@ public class MainFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_crearPaisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_crearPaisMouseClicked
+        // TODO add your handling code here:
+        boolean repetido = false;
+        if (tf_nombrePais.getText().isEmpty() || tf_numMPais.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Los parametros no deben estar vacios");
+        } else {
+            for (Pais t : paises) {
+                if (t.getNombre().equals(tf_nombrePais.getText())) {
+                    repetido = true;
+                }
+            }
+            if (repetido) {
+                JOptionPane.showMessageDialog(this, "El pais ya existe");
+            } else {
+                paises.add(new Pais(tf_nombrePais.getText(), Integer.parseInt(tf_numMPais.getText())));
+                JOptionPane.showMessageDialog(this, "Agregado exitosamente");
+            }
+
+        }
+    }//GEN-LAST:event_btn_crearPaisMouseClicked
 
     /**
      * @param args the command line arguments

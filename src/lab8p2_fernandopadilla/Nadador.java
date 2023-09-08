@@ -105,7 +105,7 @@ public class Nadador {
 
     @Override
     public String toString() {
-        return  nombre + ", " + nacionalidad;
+        return  nombre + ", " + nacionalidad + ", " + distancia +"m, "+ estilo;
     }
     
     
