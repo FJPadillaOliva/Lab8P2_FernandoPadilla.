@@ -435,6 +435,7 @@ public class MainFrame extends javax.swing.JFrame {
                 double tiempo = Double.parseDouble(tf_tiempoNadador.getText());
                 int distancia = Integer.parseInt(cb_distanciaNadador.getSelectedItem().toString().replace("m", ""));
                 String estilo = cb_estiloNadador.getSelectedItem().toString();
+                nacionalidad.getNadadores().add(new Nadador(nombre, nacionalidad, edad, estatura, estilo, distancia, tiempo, numMNadador));
                 nadadores.add(new Nadador(nombre, nacionalidad, edad, estatura, estilo, distancia, tiempo, numMNadador));
                 JOptionPane.showMessageDialog(this, "Agregado exitosamente");
             } else {
