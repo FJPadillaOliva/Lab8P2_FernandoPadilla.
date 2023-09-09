@@ -1000,7 +1000,24 @@ public class MainFrame extends javax.swing.JFrame {
                     ab.start();
                     ab1.start();
                     ab2.start();
-                    
+                    if (jProgressBar1.getValue() == distanciaE) {
+                        JOptionPane.showMessageDialog(this, "El nadador 1 ha ganado");
+                        ab.stop();
+                        ab1.stop();
+                        ab2.stop();
+                    }
+                    if (jProgressBar2.getValue() == distanciaE) {
+                        JOptionPane.showMessageDialog(this, "El nadador 2 ha ganado");
+                        ab.stop();
+                        ab1.stop();
+                        ab2.stop();
+                    }
+                    if (jProgressBar3.getValue() == distanciaE) {
+                        JOptionPane.showMessageDialog(this, "El nadador 3 ha ganado");
+                        ab.stop();
+                        ab1.stop();
+                        ab2.stop();
+                    }
                 }
             }
         }
