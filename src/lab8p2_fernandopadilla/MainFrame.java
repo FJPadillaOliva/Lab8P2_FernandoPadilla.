@@ -28,6 +28,7 @@ public class MainFrame extends javax.swing.JFrame {
     adminPais ap = new adminPais("./PaisesParticipantes.lab");
     adminNadador an = new adminNadador("./Nadadores.lab");
     adminEvento ae = new adminEvento("./Eventos.lab");
+    adminGanadores ag = new adminGanadores("./Los ganadores de toda la vida.lab");
 
     public MainFrame() {
         initComponents();
@@ -37,6 +38,8 @@ public class MainFrame extends javax.swing.JFrame {
         nadadores = an.getNadadores();
         ae.leerAEvento();
         eventos = ae.getEventos();
+        ag.leerAGanador();
+        ganadores = ag.getGanadores();
         cb_evento.setModel(actualizarcbevento());
         cb_nacionalidad.setModel(actualizarcbpais());
         cb_nadador.setModel(actualizarcbnadador());
@@ -1005,18 +1008,30 @@ public class MainFrame extends javax.swing.JFrame {
                         ab.stop();
                         ab1.stop();
                         ab2.stop();
+                        ganadores.add(nadadores.get(cb_jugadoresE.getSelectedIndex()));
+                        ag.leerAGanador();
+                        ag.add(nadadores.get(cb_jugadoresE.getSelectedIndex()));
+                        ag.escribirAGanador();
                     }
                     if (jProgressBar2.getValue() == distanciaE) {
                         JOptionPane.showMessageDialog(this, "El nadador 2 ha ganado");
                         ab.stop();
                         ab1.stop();
                         ab2.stop();
+                        ganadores.add(nadadores.get(cb_jugadoresE1.getSelectedIndex()));
+                        ag.leerAGanador();
+                        ag.add(nadadores.get(cb_jugadoresE1.getSelectedIndex()));
+                        ag.escribirAGanador();
                     }
                     if (jProgressBar3.getValue() == distanciaE) {
                         JOptionPane.showMessageDialog(this, "El nadador 3 ha ganado");
                         ab.stop();
                         ab1.stop();
                         ab2.stop();
+                        ganadores.add(nadadores.get(cb_jugadoresE2.getSelectedIndex()));
+                        ag.leerAGanador();
+                        ag.add(nadadores.get(cb_jugadoresE2.getSelectedIndex()));
+                        ag.escribirAGanador();
                     }
                 }
             }
