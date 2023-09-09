@@ -32,10 +32,10 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         ap.leerAPais();
-        an.leerANadador();
-        ae.leerAEvento();
         paises = ap.getPaises();
+        an.leerANadador();
         nadadores = an.getNadadores();
+        ae.leerAEvento();
         eventos = ae.getEventos();
         cb_evento.setModel(actualizarcbevento());
         cb_nacionalidad.setModel(actualizarcbpais());
@@ -745,6 +745,9 @@ public class MainFrame extends javax.swing.JFrame {
                 an.leerANadador();
                 an.add(new Nadador(nombre, nacionalidad, edad, estatura, estilo, distancia, tiempo, numMNadador));
                 an.escribirANadador();
+                ap.leerAPais();
+                ap.getPaises().get(cb_nacionalidad.getSelectedIndex()).getNadadores().add(new Nadador(nombre, nacionalidad, edad, estatura, estilo, distancia, tiempo, numMNadador));
+                ap.escribirAPais();
             } else {
                 JOptionPane.showMessageDialog(this, "El pais seleccionado ya cuenta con dos nadadores");
             }
