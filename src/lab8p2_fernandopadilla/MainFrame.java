@@ -25,11 +25,18 @@ public class MainFrame extends javax.swing.JFrame {
     /**
      * Creates new form MainFrame
      */
+    adminPais ap = new adminPais("./PaisesParticipantes.lab");
+    adminNadador an = new adminNadador("./Nadadores.lab");
+    adminEvento ae = new adminEvento("./Eventos.lab");
+    
     public MainFrame() {
         initComponents();
-        leerAEvento();
-        leerANadador();
-        leerAPais();
+        ap.leerAPais();
+        an.leerANadador();
+        ae.leerAEvento();
+        paises = ap.getPaises();
+        nadadores = an.getNadadores();
+        eventos = ae.getEventos();
         cb_evento.setModel(actualizarcbevento());
         cb_nacionalidad.setModel(actualizarcbpais());
         cb_nadador.setModel(actualizarcbnadador());
@@ -63,142 +70,7 @@ public class MainFrame extends javax.swing.JFrame {
             modelo.addElement(t);
         }
         return modelo;
-    }
-
-    public void escribirAPais(){
-        File archivo = new File("./PaisesParticipantes.lab");
-        FileOutputStream fw = null;
-        ObjectOutputStream bw = null;
-        try {
-            fw = new FileOutputStream(archivo);
-            bw = new ObjectOutputStream(fw);
-            for (Nadador t : nadadores) {
-                bw.writeObject(t);
-            }
-            bw.flush();
-        } catch (Exception ex) {
-        } finally {
-            try {
-                bw.close();
-                fw.close();
-            } catch (Exception ex) {
-            }
-        }
-    }
-    
-    public void escribirANadador(){
-        File archivo = new File("./Nadadores.lab");
-        FileOutputStream fw = null;
-        ObjectOutputStream bw = null;
-        try {
-            fw = new FileOutputStream(archivo);
-            bw = new ObjectOutputStream(fw);
-            for (Nadador t : nadadores) {
-                bw.writeObject(t);
-            }
-            bw.flush();
-        } catch (Exception ex) {
-        } finally {
-            try {
-                bw.close();
-                fw.close();
-            } catch (Exception ex) {
-            }
-        }
-    }
-    
-    public void escribirAEvento(){
-        File archivo = new File("./Eventos.lab");
-        FileOutputStream fw = null;
-        ObjectOutputStream bw = null;
-        try {
-            fw = new FileOutputStream(archivo);
-            bw = new ObjectOutputStream(fw);
-            for (Nadador t : nadadores) {
-                bw.writeObject(t);
-            }
-            bw.flush();
-        } catch (Exception ex) {
-        } finally {
-            try {
-                bw.close();
-                fw.close();
-            } catch (Exception ex) {
-            }
-        }
-    }
-    
-    public void leerAPais(){
-        try {            
-            File archivo = new File("./PaisesParticipantes.lab");
-            Pais temp;
-            if (archivo.exists()) {
-                FileInputStream entrada
-                    = new FileInputStream(archivo);
-                ObjectInputStream objeto
-                    = new ObjectInputStream(entrada);
-                try {
-                    while ((temp = (Pais) objeto.readObject()) != null) {
-                        paises.add(temp);
-                    }
-                } catch (EOFException e) {
-                    //encontro el final del archivo
-                }
-                objeto.close();
-                entrada.close();
-            }            
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-    
-    public void leerANadador(){
-        try {            
-            File archivo = new File("./Nadadores.lab");
-            Nadador temp;
-            if (archivo.exists()) {
-                FileInputStream entrada
-                    = new FileInputStream(archivo);
-                ObjectInputStream objeto
-                    = new ObjectInputStream(entrada);
-                try {
-                    while ((temp = (Nadador) objeto.readObject()) != null) {
-                        nadadores.add(temp);
-                    }
-                } catch (EOFException e) {
-                    //encontro el final del archivo
-                }
-                objeto.close();
-                entrada.close();
-            }            
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-    
-    public void leerAEvento(){
-        try {            
-            File archivo = new File("./Eventos.lab");
-            Evento temp;
-            if (archivo.exists()) {
-                FileInputStream entrada
-                    = new FileInputStream(archivo);
-                ObjectInputStream objeto
-                    = new ObjectInputStream(entrada);
-                try {
-                    while ((temp = (Evento) objeto.readObject()) != null) {
-                        eventos.add(temp);
-                    }
-                } catch (EOFException e) {
-                    //encontro el final del archivo
-                }
-                objeto.close();
-                entrada.close();
-            }            
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
+    }    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -839,7 +711,9 @@ public class MainFrame extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Agregado exitosamente");
                 cb_nacionalidad.setModel(actualizarcbpais());
                 cb_paises.setModel(actualizarcbpais());
-                escribirAPais();
+                ap.leerAPais();
+                ap.add(new Pais(tf_nombrePais.getText(), Integer.parseInt(tf_numMPais.getText())));
+                ap.escribirAPais();
             }
             tf_nombrePais.setText("");
             tf_numMPais.setText("");
@@ -868,7 +742,9 @@ public class MainFrame extends javax.swing.JFrame {
                 nadadores.add(new Nadador(nombre, nacionalidad, edad, estatura, estilo, distancia, tiempo, numMNadador));
                 JOptionPane.showMessageDialog(this, "Agregado exitosamente");
                 cb_nadador.setModel(actualizarcbnadador());
-                escribirANadador();
+                an.leerANadador();
+                an.add(new Nadador(nombre, nacionalidad, edad, estatura, estilo, distancia, tiempo, numMNadador));
+                an.escribirANadador();
             } else {
                 JOptionPane.showMessageDialog(this, "El pais seleccionado ya cuenta con dos nadadores");
             }
@@ -909,7 +785,10 @@ public class MainFrame extends javax.swing.JFrame {
                 tf_numMNadador1.setText("");
                 tf_tiempoNadador1.setText("");
                 cb_nadador.setModel(actualizarcbnadador());
-                escribirANadador();
+                an.leerANadador();
+                an.getNadadores().remove(cb_nadador.getSelectedIndex());
+                an.getNadadores().add(cb_nadador.getSelectedIndex(), new Nadador(nombre, nacionalidad, edad, estatura, estilo, distancia, tiempo, numMNadador));
+                an.escribirANadador();
             }
         } else {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un nadador a modificar");
@@ -922,7 +801,9 @@ public class MainFrame extends javax.swing.JFrame {
             nadadores.remove(cb_nadador.getSelectedIndex());
             JOptionPane.showMessageDialog(this, "Eliminado exitosamente");
             cb_nadador.setModel(actualizarcbnadador());
-            escribirANadador();
+            an.leerANadador();
+            an.getNadadores().remove(cb_nadador.getSelectedIndex());
+            an.escribirANadador();
         }
     }//GEN-LAST:event_btn_eliminarNadadorMouseClicked
 
@@ -932,7 +813,9 @@ public class MainFrame extends javax.swing.JFrame {
             eventos.remove(cb_evento.getSelectedIndex());
             JOptionPane.showMessageDialog(this, "Eliminado exitosamente");
             cb_evento.setModel(actualizarcbevento());
-            escribirAEvento();
+            ae.leerAEvento();
+            ae.getEventos().remove(cb_evento.getSelectedIndex());
+            ae.escribirAEvento();
         }
     }//GEN-LAST:event_btn_eliminarEventoMouseClicked
 
@@ -946,7 +829,11 @@ public class MainFrame extends javax.swing.JFrame {
                     Double.parseDouble(tf_recordEvento.getText())));
             JOptionPane.showMessageDialog(this, "Agregado exitosamente");
             cb_evento.setModel(actualizarcbevento());
-            escribirAEvento();
+            ae.leerAEvento();
+            ae.add(new Evento(cb_estilosEvento.getSelectedItem().toString(),
+                    Integer.parseInt(cb_distanciaEvento.getSelectedItem().toString().replace("m", "")),
+                    Double.parseDouble(tf_recordEvento.getText())));
+            ae.escribirAEvento();
         }
         tf_recordEvento.setText("");
     }//GEN-LAST:event_btn_agregarEventoMouseClicked
@@ -962,7 +849,12 @@ public class MainFrame extends javax.swing.JFrame {
                     Double.parseDouble(tf_recordEvento1.getText())));
             JOptionPane.showMessageDialog(this, "Agregado exitosamente");
             cb_evento.setModel(actualizarcbevento());
-            escribirAEvento();
+            ae.leerAEvento();
+            ae.getEventos().remove(cb_evento.getSelectedIndex());
+            ae.getEventos().add(cb_evento.getSelectedIndex(), new Evento(cb_estilosEvento1.getSelectedItem().toString(),
+                    Integer.parseInt(cb_distanciaEvento1.getSelectedItem().toString().replace("m", "")),
+                    Double.parseDouble(tf_recordEvento1.getText())));
+            ae.escribirAEvento();
         }
         tf_recordEvento1.setText("");
     }//GEN-LAST:event_btn_modificarEventoMouseClicked
